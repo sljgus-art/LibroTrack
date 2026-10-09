@@ -21,21 +21,18 @@ async function buscarISBN() {
 
   try {
 
-    const respuesta =
-      await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
-      );
+    const respuesta = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
+    );
 
-    const datos =
-      await respuesta.json();
+    const datos = await respuesta.json();
 
     if (!datos.items || !datos.items.length) {
       alert("Libro no encontrado");
       return;
     }
 
-    const libro =
-      datos.items[0].volumeInfo;
+    const libro = datos.items[0].volumeInfo;
 
     document.getElementById("titulo").value =
       libro.title || "";
@@ -87,6 +84,9 @@ function agregarLibro() {
   const portada =
     document.getElementById("portada").value;
 
+  const estado =
+    document.getElementById("estado").value;
+
   if (!titulo.trim()) {
     alert("Introduce un título");
     return;
@@ -100,7 +100,8 @@ function agregarLibro() {
     fecha,
     paginas,
     genero,
-    portada
+    portada,
+    estado
   });
 
   guardarDatos();
@@ -132,6 +133,20 @@ function render() {
   document.getElementById(
     "totalLibros"
   ).textContent = libros.length;
+
+  const totalPaginas = libros.reduce(
+    (total, libro) =>
+      total + (Number(libro.paginas) || 0),
+    0
+  );
+
+  const paginasElemento =
+    document.getElementById("totalPaginas");
+
+  if (paginasElemento) {
+    paginasElemento.textContent =
+      totalPaginas.toLocaleString("es-ES");
+  }
 
   const contenedor =
     document.getElementById("listaLibros");
@@ -173,8 +188,15 @@ function render() {
         </p>
 
         <p>
-          <strong>Fecha fin:</strong>
+          <strong>Fecha:</strong>
           ${libro.fecha || "-"}
+        </p>
+
+        <p>
+          <strong>Estado:</strong>
+          <span class="estado ${libro.estado}">
+            ${libro.estado}
+          </span>
         </p>
 
         <button
