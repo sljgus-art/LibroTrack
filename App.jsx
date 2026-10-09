@@ -2,6 +2,8 @@ let libros = JSON.parse(
   localStorage.getItem("libros") || "[]"
 );
 
+let lectorISBN = null;
+
 function guardarDatos() {
   localStorage.setItem(
     "libros",
@@ -59,6 +61,51 @@ async function buscarISBN() {
 
     alert("Error buscando ISBN");
   }
+}
+
+function iniciarEscaner() {
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.style.display = "block";
+
+  lectorISBN = new Html5Qrcode("reader");
+
+  lectorISBN.start(
+    {
+      facingMode: "environment"
+    },
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    (codigoLeido) => {
+
+      document.getElementById("isbn").value =
+        codigoLeido;
+
+      lectorISBN
+        .stop()
+        .then(() => {
+
+          reader.innerHTML = "";
+
+          buscarISBN();
+
+        });
+
+    },
+    () => {}
+  ).catch(error => {
+
+    console.error(error);
+
+    alert(
+      "No se pudo abrir la cámara."
+    );
+
+  });
 }
 
 function agregarLibro() {
@@ -144,8 +191,11 @@ function render() {
     document.getElementById("totalPaginas");
 
   if (paginasElemento) {
+
     paginasElemento.textContent =
-      totalPaginas.toLocaleString("es-ES");
+      totalPaginas.toLocaleString(
+        "es-ES"
+      );
   }
 
   const contenedor =
@@ -161,7 +211,8 @@ function render() {
 
         ${
           libro.portada
-            ? `${libro.portada}`
+            ? `${libro.portada}
+              `
             : ""
         }
 
@@ -193,8 +244,9 @@ function render() {
         </p>
 
         <p>
-          <strong>Estado:</strong>
-          <span class="estado ${libro.estado}">
+          <span
+            class="estado ${libro.estado}"
+          >
             ${libro.estado}
           </span>
         </p>
@@ -210,7 +262,6 @@ function render() {
 
     `;
   });
-
 }
 
 render();
