@@ -1,123 +1,97 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+[!DOCTYPE html]
+[html lang="es"]
 
-body{
-    font-family:Segoe UI,Arial,sans-serif;
-    background:#f3f4f6;
-    color:#111827;
-    padding:20px;
-}
+[head]
 
-.container{
-    max-width:900px;
-    margin:auto;
-}
+[meta charset="UTF-8"]
+[meta name="viewport" content="width=device-width, initial-scale=1.0"]
 
-h1{
-    text-align:center;
-    margin-bottom:25px;
-    font-size:2.2rem;
-}
+[title]📚 LibroTrack[/title]
 
-h2{
-    margin:20px 0;
-}
+[link rel="stylesheet" href="style.css"]
 
-.formulario{
-    background:#ffffff;
-    padding:24px;
-    border-radius:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    margin-bottom:25px;
-}
+[/head]
 
-input{
-    width:100%;
-    padding:14px;
-    margin-bottom:12px;
-    border:1px solid #d1d5db;
-    border-radius:12px;
-    font-size:15px;
-}
+[body]
 
-input:focus{
-    outline:none;
-    border-color:#2563eb;
-}
+[div class="container"]
 
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#2563eb;
-    color:white;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-    margin-bottom:10px;
-}
+[h1]📚 LibroTrack[/h1]
 
-button:hover{
-    background:#1d4ed8;
-}
+[div class="formulario"]
 
-.estadisticas{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
-    margin-bottom:30px;
-}
+[input
+id="titulo"
+type="text"
+placeholder="Título del libro"
+]
 
-.tarjeta{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
+[input
+id="autor"
+type="text"
+placeholder="Autor"
+]
 
-.tarjeta span{
-    display:block;
-    font-size:32px;
-    font-weight:bold;
-    color:#2563eb;
-}
+[input
+id="isbn"
+type="text"
+placeholder="ISBN"
+]
 
-.tarjeta small{
-    color:#6b7280;
-}
+[button onclick="buscarISBN()"]
+🔍 Buscar ISBN
+[/button]
 
-.libro{
-    background:white;
-    border-radius:20px;
-    padding:16px;
-    margin-bottom:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
+[input
+id="paginas"
+type="number"
+placeholder="Número de páginas"
+]
 
-.portada{
-    width:100px;
-    border-radius:10px;
-    margin-bottom:10px;
-}
+[input
+id="genero"
+type="text"
+placeholder="Género"
+]
 
-.libro h3{
-    margin-bottom:10px;
-}
+[input
+id="fecha"
+type="date"
+]
 
-.libro p{
-    margin-bottom:6px;
-}
+[input
+id="portada"
+type="hidden"
+]
 
-.borrar{
-    background:#dc2626;
-}
+[button onclick="agregarLibro()"]
+💾 Guardar libro
+[/button]
 
-.borrar:hover{
-    background:#b91c1c;
-}
+[/div]
+
+[div class="estadisticas"]
+
+[div class="tarjeta"]
+[span id="totalLibros"]0[/span]
+[small]Libros[/small]
+[/div]
+
+[div class="tarjeta"]
+[span id="totalPaginas"]0[/span]
+[small]Páginas[/small]
+[/div]
+
+[/div]
+
+[h2]📚 Mi biblioteca[/h2]
+
+[div id="listaLibros"][/div]
+
+[/div]
+
+[script src="app.js"][/script]
+
+[/body]
+
+[/html]
