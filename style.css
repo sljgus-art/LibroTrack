@@ -220,22 +220,67 @@ button{
 
 /* MÓVIL */
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
   body{
-    padding:12px;
+    padding:10px;
   }
 
-  h1{
+  .container{
+    width:100%;
+  }
+
+  .hero-title{
     font-size:1.8rem;
   }
 
+  .hero-subtitle{
+    font-size:0.95rem;
+  }
+
+  .formulario{
+    padding:18px;
+    border-radius:22px;
+  }
+
+  input,
+  select,
+  button{
+    font-size:16px;
+  }
+
+  .estadisticas{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .tarjeta{
+    padding:16px;
+  }
+
   .tarjeta span{
-    font-size:26px;
+    font-size:28px;
+  }
+
+  .libro{
+    padding:16px;
+    border-radius:20px;
+  }
+
+  .libro h3{
+    font-size:1.1rem;
   }
 
   .portada{
     width:100px;
+  }
+
+  .fab{
+    width:58px;
+    height:58px;
+    font-size:26px;
+    right:15px;
+    bottom:15px;
   }
 
 }
