@@ -15,9 +15,7 @@ async function buscarISBN() {
     document.getElementById("isbn").value.trim();
 
   if (!isbn) {
-
     alert("Introduce un ISBN");
-
     return;
   }
 
@@ -32,9 +30,7 @@ async function buscarISBN() {
       await respuesta.json();
 
     if (!datos.items || !datos.items.length) {
-
       alert("Libro no encontrado");
-
       return;
     }
 
@@ -66,15 +62,30 @@ async function buscarISBN() {
 
     alert("Error buscando ISBN");
   }
+}
 
 function agregarLibro() {
-  const titulo = document.getElementById("titulo").value;
-  const autor = document.getElementById("autor").value;
-  const isbn = document.getElementById("isbn").value;
-  const fecha = document.getElementById("fecha").value;
-  const paginas = document.getElementById("paginas").value;
-  const genero = document.getElementById("genero").value;
-  const portada = document.getElementById("portada").value;
+
+  const titulo =
+    document.getElementById("titulo").value;
+
+  const autor =
+    document.getElementById("autor").value;
+
+  const isbn =
+    document.getElementById("isbn").value;
+
+  const fecha =
+    document.getElementById("fecha").value;
+
+  const paginas =
+    document.getElementById("paginas").value;
+
+  const genero =
+    document.getElementById("genero").value;
+
+  const portada =
+    document.getElementById("portada").value;
 
   if (!titulo.trim()) {
     alert("Introduce un título");
@@ -86,7 +97,10 @@ function agregarLibro() {
     titulo,
     autor,
     isbn,
-    fecha
+    fecha,
+    paginas,
+    genero,
+    portada
   });
 
   guardarDatos();
@@ -95,20 +109,26 @@ function agregarLibro() {
   document.getElementById("autor").value = "";
   document.getElementById("isbn").value = "";
   document.getElementById("fecha").value = "";
+  document.getElementById("paginas").value = "";
+  document.getElementById("genero").value = "";
+  document.getElementById("portada").value = "";
 
   render();
 }
 
 function borrarLibro(id) {
+
   libros = libros.filter(
     libro => libro.id !== id
   );
 
   guardarDatos();
+
   render();
 }
 
 function render() {
+
   document.getElementById(
     "totalLibros"
   ).textContent = libros.length;
@@ -121,7 +141,14 @@ function render() {
   libros.forEach(libro => {
 
     contenedor.innerHTML += `
+
       <div class="libro">
+
+        ${
+          libro.portada
+            ? `${libro.portada}`
+            : ""
+        }
 
         <h3>${libro.titulo}</h3>
 
@@ -133,6 +160,16 @@ function render() {
         <p>
           <strong>ISBN:</strong>
           ${libro.isbn || "-"}
+        </p>
+
+        <p>
+          <strong>Páginas:</strong>
+          ${libro.paginas || "-"}
+        </p>
+
+        <p>
+          <strong>Género:</strong>
+          ${libro.genero || "-"}
         </p>
 
         <p>
@@ -148,8 +185,10 @@ function render() {
         </button>
 
       </div>
+
     `;
   });
+
 }
 
 render();
