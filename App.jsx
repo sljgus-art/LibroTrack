@@ -9,6 +9,64 @@ function guardarDatos() {
   );
 }
 
+async function buscarISBN() {
+
+  const isbn =
+    document.getElementById("isbn").value.trim();
+
+  if (!isbn) {
+
+    alert("Introduce un ISBN");
+
+    return;
+  }
+
+  try {
+
+    const respuesta =
+      await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
+      );
+
+    const datos =
+      await respuesta.json();
+
+    if (!datos.items || !datos.items.length) {
+
+      alert("Libro no encontrado");
+
+      return;
+    }
+
+    const libro =
+      datos.items[0].volumeInfo;
+
+    document.getElementById("titulo").value =
+      libro.title || "";
+
+    document.getElementById("autor").value =
+      libro.authors
+        ? libro.authors.join(", ")
+        : "";
+
+    document.getElementById("paginas").value =
+      libro.pageCount || "";
+
+    document.getElementById("genero").value =
+      libro.categories
+        ? libro.categories.join(", ")
+        : "";
+
+    document.getElementById("portada").value =
+      libro.imageLinks?.thumbnail || "";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Error buscando ISBN");
+  }
+
 function agregarLibro() {
   const titulo = document.getElementById("titulo").value;
   const autor = document.getElementById("autor").value;
