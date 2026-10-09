@@ -51,6 +51,15 @@ placeholder="🔢 ISBN"
 
 <button
 class="btn-isbn"
+onclick="iniciarEscaner()"
+>
+📷 Escanear ISBN
+</button>
+
+<div id="reader"></div>
+
+<button
+class="btn-isbn"
 onclick="buscarISBN()"
 >
 🔍 Buscar ISBN
@@ -137,6 +146,10 @@ onclick="agregarLibro()"
 
 </div>
 
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script src="app.js"></script>
+
 <button
 class="fab"
 onclick="window.scrollTo({top:0,behavior:'smooth'})"
@@ -144,9 +157,6 @@ onclick="window.scrollTo({top:0,behavior:'smooth'})"
 +
 </button>
 
-<script src="app.js"></script>
-
 </body>
 
 </html>
-``
