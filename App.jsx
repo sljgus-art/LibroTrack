@@ -72,6 +72,9 @@ function agregarLibro() {
   const autor = document.getElementById("autor").value;
   const isbn = document.getElementById("isbn").value;
   const fecha = document.getElementById("fecha").value;
+  const paginas = document.getElementById("paginas").value;
+  const genero = document.getElementById("genero").value;
+  const portada = document.getElementById("portada").value;
 
   if (!titulo.trim()) {
     alert("Introduce un título");
