@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibroTrack</title>
+
+<title>📚 LibroTrack</title>
 
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
@@ -15,34 +18,104 @@
 
 <div class="formulario">
 
-<input id="titulo" type="text" placeholder="Título del libro">
+<input
+id="titulo"
+type="text"
+placeholder="Título del libro"
+>
 
-<input id="autor" type="text" placeholder="Autor">
+<input
+id="autor"
+type="text"
+placeholder="Autor"
+>
 
-<input id="isbn" type="text" placeholder="ISBN">
+<input
+id="isbn"
+type="text"
+placeholder="ISBN"
+>
 
-<input id="fecha" type="date">
+<button
+class="btn-isbn"
+onclick="buscarISBN()"
+>
+🔍 Buscar ISBN
+</button>
 
-<button onclick="agregarLibro()">
-Guardar libro
+<input
+id="paginas"
+type="number"
+placeholder="Número de páginas"
+>
+
+<input
+id="genero"
+type="text"
+placeholder="Género"
+>
+
+<select id="estado">
+
+<option value="pendiente">
+🕒 Pendiente
+</option>
+
+<option value="leyendo">
+📖 Leyendo
+</option>
+
+<option value="leido">
+✅ Leído
+</option>
+
+<option value="abandonado">
+❌ Abandonado
+</option>
+
+</select>
+
+<input
+id="fecha"
+type="date"
+>
+
+<input
+id="portada"
+type="hidden"
+>
+
+<button
+class="btn-primary"
+onclick="agregarLibro()"
+>
+💾 Guardar libro
 </button>
 
 </div>
 
 <div class="estadisticas">
+
 <div class="tarjeta">
 <span id="totalLibros">0</span>
 <small>Libros</small>
 </div>
+
+<div class="tarjeta">
+<span id="totalPaginas">0</span>
+<small>Páginas</small>
 </div>
 
-<h2>Mi biblioteca</h2>
+</div>
+
+<h2>📚 Mi biblioteca</h2>
 
 <div id="listaLibros"></div>
 
 </div>
 
-<scriptcript>
+<script src="app.js"></script>
 
 </body>
+
 </html>
