@@ -5,10 +5,20 @@
 }
 
 body{
-  font-family:Inter,Segoe UI,Arial,sans-serif;
-  background:#f3f4f6;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+
+  background: linear-gradient(
+    180deg,
+    #eef4ff 0%,
+    #f8fafc 40%,
+    #f3f4f6 100%
+  );
+
   color:#111827;
+
   padding:15px;
+
+  min-height:100vh;
 }
 
 .container{
