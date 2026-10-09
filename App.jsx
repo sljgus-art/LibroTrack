@@ -152,7 +152,7 @@ function App() {
   function saveBook(event) {
     event.preventDefault();
     if (!draft.title.trim()) { setMessage("El título es obligatorio."); return; }
-    const book = { ...draft, id: editingId || crypto.randomUUID(), pageCount: draft.pageCount === "" ? "" : Number(draft.pageCount), wikipedia: wikiText };
+    const book = { ...draft, id: editingId || (globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`), pageCount: draft.pageCount === "" ? "" : Number(draft.pageCount), wikipedia: wikiText };
     setBooks(prev => editingId ? prev.map(b => b.id === editingId ? book : b) : [book, ...prev]);
     setShowForm(false); setMessage(""); setSelected(book);
   }
