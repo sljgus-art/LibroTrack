@@ -1,83 +1,123 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#f3f4f6;
+    color:#111827;
+    padding:20px;
 }
 
-h1 {
-    text-align: center;
+.container{
+    max-width:900px;
+    margin:auto;
 }
 
-.formulario {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:2.2rem;
 }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+h2{
+    margin:20px 0;
 }
 
-button {
-    padding: 12px;
-    width: 100%;
-    cursor: pointer;
-    border: none;
-    background: #2563eb;
-    color: white;
-    border-radius: 6px;
+.formulario{
+    background:#ffffff;
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom:25px;
 }
 
-button:hover {
-    background: #1d4ed8;
+input{
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    font-size:15px;
 }
 
-.estadisticas {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+input:focus{
+    outline:none;
+    border-color:#2563eb;
 }
 
-.tarjeta {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    min-width: 120px;
-    text-align: center;
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:10px;
 }
 
-.tarjeta span {
-    display: block;
-    font-size: 24px;
-    font-weight: bold;
+button:hover{
+    background:#1d4ed8;
 }
 
-.libro {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.estadisticas{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:30px;
 }
 
-.libro h3 {
-    margin: 0;
+.tarjeta{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-.libro p {
-    margin: 5px 0;
+.tarjeta span{
+    display:block;
+    font-size:32px;
+    font-weight:bold;
+    color:#2563eb;
 }
 
-.borrar {
-    margin-top: 10px;
-    background: red;
+.tarjeta small{
+    color:#6b7280;
+}
+
+.libro{
+    background:white;
+    border-radius:20px;
+    padding:16px;
+    margin-bottom:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.portada{
+    width:100px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.libro h3{
+    margin-bottom:10px;
+}
+
+.libro p{
+    margin-bottom:6px;
+}
+
+.borrar{
+    background:#dc2626;
+}
+
+.borrar:hover{
+    background:#b91c1c;
 }
