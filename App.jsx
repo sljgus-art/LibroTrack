@@ -4,6 +4,10 @@ let libros = JSON.parse(
 
 let lectorISBN = null;
 
+/* =========================
+   UTILIDADES ISBN
+========================= */
+
 function guardarDatos() {
   localStorage.setItem(
     "libros",
@@ -11,13 +15,87 @@ function guardarDatos() {
   );
 }
 
+function limpiarISBN(isbn) {
+  return isbn.replace(/[-\s]/g, "");
+}
+
+function validarISBN10(isbn) {
+
+  if (!/^\d{9}[\dX]$/i.test(isbn)) {
+    return false;
+  }
+
+  let suma = 0;
+
+  for (let i = 0; i < 9; i++) {
+    suma += (i + 1) * parseInt(isbn[i]);
+  }
+
+  const ultimo =
+    isbn[9].toUpperCase() === "X"
+      ? 10
+      : parseInt(isbn[9]);
+
+  suma += 10 * ultimo;
+
+  return suma % 11 === 0;
+}
+
+function validarISBN13(isbn) {
+
+  if (!/^\d{13}$/.test(isbn)) {
+    return false;
+  }
+
+  let suma = 0;
+
+  for (let i = 0; i < 12; i++) {
+
+    const numero = parseInt(isbn[i]);
+
+    suma +=
+      i % 2 === 0
+        ? numero
+        : numero * 3;
+  }
+
+  const control =
+    (10 - (suma % 10)) % 10;
+
+  return control === parseInt(isbn[12]);
+}
+
+function validarISBN(isbn) {
+
+  isbn = limpiarISBN(
+    isbn.toUpperCase()
+  );
+
+  return (
+    validarISBN10(isbn) ||
+    validarISBN13(isbn)
+  );
+}
+
+/* =========================
+   GOOGLE BOOKS
+========================= */
+
 async function buscarISBN() {
 
-  const isbn =
-    document.getElementById("isbn").value.trim();
+  const isbn = limpiarISBN(
+    document.getElementById("isbn")
+      .value
+      .trim()
+  );
 
   if (!isbn) {
     alert("Introduce un ISBN");
+    return;
+  }
+
+  if (!validarISBN(isbn)) {
+    alert("ISBN inválido");
     return;
   }
 
@@ -30,11 +108,14 @@ async function buscarISBN() {
     const datos = await respuesta.json();
 
     if (!datos.items || !datos.items.length) {
+
       alert("Libro no encontrado");
+
       return;
     }
 
-    const libro = datos.items[0].volumeInfo;
+    const libro =
+      datos.items[0].volumeInfo;
 
     document.getElementById("titulo").value =
       libro.title || "";
@@ -59,9 +140,15 @@ async function buscarISBN() {
 
     console.error(error);
 
-    alert("Error buscando ISBN");
+    alert(
+      "Error consultando Google Books"
+    );
   }
 }
+
+/* =========================
+   ESCÁNER ISBN
+========================= */
 
 function iniciarEscaner() {
 
@@ -70,7 +157,8 @@ function iniciarEscaner() {
 
   reader.style.display = "block";
 
-  lectorISBN = new Html5Qrcode("reader");
+  lectorISBN =
+    new Html5Qrcode("reader");
 
   lectorISBN.start(
     {
@@ -82,8 +170,9 @@ function iniciarEscaner() {
     },
     (codigoLeido) => {
 
-      document.getElementById("isbn").value =
-        codigoLeido;
+      document.getElementById(
+        "isbn"
+      ).value = codigoLeido;
 
       lectorISBN
         .stop()
@@ -97,16 +186,21 @@ function iniciarEscaner() {
 
     },
     () => {}
-  ).catch(error => {
+  )
+  .catch(error => {
 
     console.error(error);
 
     alert(
-      "No se pudo abrir la cámara."
+      "No se pudo abrir la cámara"
     );
 
   });
 }
+
+/* =========================
+   LIBROS
+========================= */
 
 function agregarLibro() {
 
@@ -135,20 +229,30 @@ function agregarLibro() {
     document.getElementById("estado").value;
 
   if (!titulo.trim()) {
+
     alert("Introduce un título");
+
     return;
   }
 
   libros.unshift({
+
     id: Date.now(),
+
     titulo,
     autor,
     isbn,
+
     fecha,
+
     paginas,
+
     genero,
+
     portada,
+
     estado
+
   });
 
   guardarDatos();
@@ -175,20 +279,28 @@ function borrarLibro(id) {
   render();
 }
 
-function render() {
+/* =========================
+   ESTADÍSTICAS
+========================= */
+
+function actualizarEstadisticas() {
 
   document.getElementById(
     "totalLibros"
   ).textContent = libros.length;
 
-  const totalPaginas = libros.reduce(
-    (total, libro) =>
-      total + (Number(libro.paginas) || 0),
-    0
-  );
+  const totalPaginas =
+    libros.reduce(
+      (total, libro) =>
+        total +
+        (Number(libro.paginas) || 0),
+      0
+    );
 
   const paginasElemento =
-    document.getElementById("totalPaginas");
+    document.getElementById(
+      "totalPaginas"
+    );
 
   if (paginasElemento) {
 
@@ -198,8 +310,76 @@ function render() {
       );
   }
 
+  const generos = {};
+  const autores = {};
+
+  libros.forEach(libro => {
+
+    if (libro.genero) {
+
+      generos[libro.genero] =
+        (generos[libro.genero] || 0) + 1;
+    }
+
+    if (libro.autor) {
+
+      autores[libro.autor] =
+        (autores[libro.autor] || 0) + 1;
+    }
+
+  });
+
+  const generoFavorito =
+    Object.keys(generos).length
+      ? Object.keys(generos)
+          .sort(
+            (a,b) =>
+              generos[b] - generos[a]
+          )[0]
+      : "-";
+
+  const autorFavorito =
+    Object.keys(autores).length
+      ? Object.keys(autores)
+          .sort(
+            (a,b) =>
+              autores[b] - autores[a]
+          )[0]
+      : "-";
+
+  const generoElemento =
+    document.getElementById(
+      "generoFavorito"
+    );
+
+  const autorElemento =
+    document.getElementById(
+      "autorFavorito"
+    );
+
+  if (generoElemento) {
+    generoElemento.textContent =
+      generoFavorito;
+  }
+
+  if (autorElemento) {
+    autorElemento.textContent =
+      autorFavorito;
+  }
+}
+
+/* =========================
+   RENDER
+========================= */
+
+function render() {
+
+  actualizarEstadisticas();
+
   const contenedor =
-    document.getElementById("listaLibros");
+    document.getElementById(
+      "listaLibros"
+    );
 
   contenedor.innerHTML = "";
 
@@ -211,9 +391,10 @@ function render() {
 
         ${
           libro.portada
-            ? `${libro.portada}
-              `
-            : ""
+          ? `
+            ${libro.portada}
+          `
+          : ""
         }
 
         <h3>${libro.titulo}</h3>
@@ -245,23 +426,4 @@ function render() {
 
         <p>
           <span
-            class="estado ${libro.estado}"
-          >
-            ${libro.estado}
-          </span>
-        </p>
-
-        <button
-          class="borrar"
-          onclick="borrarLibro(${libro.id})"
-        >
-          Eliminar
-        </button>
-
-      </div>
-
-    `;
-  });
-}
-
-render();
+            
