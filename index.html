@@ -2,38 +2,51 @@
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>📚 MiBiblioteca</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
-<link rel="stylesheet" href="style.css">
+<title>📚 Mi Biblioteca</title>
+
+<link
+rel="stylesheet"
+href="style.css"
+>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>📚 MiBiblioteca</h1>
+<h1>📚 Mi Biblioteca</h1>
+
+<p class="subtitulo">
+Tu biblioteca personal de lectura
+</p>
 
 <div class="formulario">
 
 <input
 id="titulo"
 type="text"
-placeholder="Título del libro"
+placeholder="📖 Título del libro"
 >
 
 <input
 id="autor"
 type="text"
-placeholder="Autor"
+placeholder="✍️ Autor"
 >
 
 <input
 id="isbn"
 type="text"
-placeholder="ISBN"
+placeholder="🔢 ISBN"
 >
 
 <button
@@ -46,13 +59,13 @@ onclick="buscarISBN()"
 <input
 id="paginas"
 type="number"
-placeholder="Número de páginas"
+placeholder="📄 Número de páginas"
 >
 
 <input
 id="genero"
 type="text"
-placeholder="Género"
+placeholder="🏷️ Género"
 >
 
 <select id="estado">
@@ -106,6 +119,16 @@ onclick="agregarLibro()"
 <small>Páginas</small>
 </div>
 
+<div class="tarjeta">
+<span id="generoFavorito">-</span>
+<small>Género favorito</small>
+</div>
+
+<div class="tarjeta">
+<span id="autorFavorito">-</span>
+<small>Autor favorito</small>
+</div>
+
 </div>
 
 <h2>📚 Mi biblioteca</h2>
@@ -114,8 +137,16 @@ onclick="agregarLibro()"
 
 </div>
 
+<button
+class="fab"
+onclick="window.scrollTo({top:0,behavior:'smooth'})"
+>
++
+</button>
+
 <script src="app.js"></script>
 
 </body>
 
 </html>
+``
