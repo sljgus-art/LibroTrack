@@ -4,10 +4,6 @@ let libros = JSON.parse(
 
 let lectorISBN = null;
 
-/* =========================
-   UTILIDADES ISBN
-========================= */
-
 function guardarDatos() {
   localStorage.setItem(
     "libros",
@@ -77,10 +73,6 @@ function validarISBN(isbn) {
   );
 }
 
-/* =========================
-   GOOGLE BOOKS
-========================= */
-
 async function buscarISBN() {
 
   const isbn = limpiarISBN(
@@ -105,12 +97,11 @@ async function buscarISBN() {
       `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
     );
 
-    const datos = await respuesta.json();
+    const datos =
+      await respuesta.json();
 
-    if (!datos.items || !datos.items.length) {
-
+    if (!datos.items?.length) {
       alert("Libro no encontrado");
-
       return;
     }
 
@@ -140,15 +131,9 @@ async function buscarISBN() {
 
     console.error(error);
 
-    alert(
-      "Error consultando Google Books"
-    );
+    alert("Error buscando ISBN");
   }
 }
-
-/* =========================
-   ESCÁNER ISBN
-========================= */
 
 function iniciarEscaner() {
 
@@ -199,10 +184,6 @@ function iniciarEscaner() {
 
 }
 
-/* =========================
-   LIBROS
-========================= */
-
 function agregarLibro() {
 
   const titulo =
@@ -214,14 +195,14 @@ function agregarLibro() {
   const isbn =
     document.getElementById("isbn").value;
 
-  const fecha =
-    document.getElementById("fecha").value;
-
   const paginas =
     document.getElementById("paginas").value;
 
   const genero =
     document.getElementById("genero").value;
+
+  const fecha =
+    document.getElementById("fecha").value;
 
   const portada =
     document.getElementById("portada").value;
@@ -230,30 +211,20 @@ function agregarLibro() {
     document.getElementById("estado").value;
 
   if (!titulo.trim()) {
-
     alert("Introduce un título");
-
     return;
   }
 
   libros.unshift({
-
     id: Date.now(),
-
     titulo,
     autor,
     isbn,
-
-    fecha,
-
     paginas,
-
     genero,
-
+    fecha,
     portada,
-
     estado
-
   });
 
   guardarDatos();
@@ -261,9 +232,9 @@ function agregarLibro() {
   document.getElementById("titulo").value = "";
   document.getElementById("autor").value = "";
   document.getElementById("isbn").value = "";
-  document.getElementById("fecha").value = "";
   document.getElementById("paginas").value = "";
   document.getElementById("genero").value = "";
+  document.getElementById("fecha").value = "";
   document.getElementById("portada").value = "";
 
   render();
@@ -280,11 +251,7 @@ function borrarLibro(id) {
   render();
 }
 
-/* =========================
-   ESTADÍSTICAS
-========================= */
-
-function actualizarEstadisticas() {
+function render() {
 
   document.getElementById(
     "totalLibros"
@@ -298,133 +265,56 @@ function actualizarEstadisticas() {
       0
     );
 
-  const paginasElemento =
-    document.getElementById(
-      "totalPaginas"
-    );
-
-  if (paginasElemento) {
-
-    paginasElemento.textContent =
-      totalPaginas.toLocaleString(
-        "es-ES"
-      );
-  }
-
-  const generos = {};
-  const autores = {};
-
-  libros.forEach(libro => {
-
-    if (libro.genero) {
-
-      generos[libro.genero] =
-        (generos[libro.genero] || 0) + 1;
-    }
-
-    if (libro.autor) {
-
-      autores[libro.autor] =
-        (autores[libro.autor] || 0) + 1;
-    }
-
-  });
-
-  const generoFavorito =
-    Object.keys(generos).length
-      ? Object.keys(generos)
-          .sort(
-            (a,b) =>
-              generos[b] - generos[a]
-          )[0]
-      : "-";
-
-  const autorFavorito =
-    Object.keys(autores).length
-      ? Object.keys(autores)
-          .sort(
-            (a,b) =>
-              autores[b] - autores[a]
-          )[0]
-      : "-";
-
-  const generoElemento =
-    document.getElementById(
-      "generoFavorito"
-    );
-
-  const autorElemento =
-    document.getElementById(
-      "autorFavorito"
-    );
-
-  if (generoElemento) {
-    generoElemento.textContent =
-      generoFavorito;
-  }
-
-  if (autorElemento) {
-    autorElemento.textContent =
-      autorFavorito;
-  }
-}
-
-/* =========================
-   RENDER
-========================= */
-
-function render() {
-
-  actualizarEstadisticas();
+  document.getElementById(
+    "totalPaginas"
+  ).textContent =
+    totalPaginas.toLocaleString("es-ES");
 
   const contenedor =
-    document.getElementById(
-      "listaLibros"
-    );
+    document.getElementById("listaLibros");
 
   contenedor.innerHTML = "";
 
   libros.forEach(libro => {
 
     contenedor.innerHTML += `
-
       <div class="libro">
 
         ${
           libro.portada
-          ? `
-            ${libro.portada}
-          `
-          : ""
+            ? `<img class=tada}`
+            : ""
         }
 
         <h3>${libro.titulo}</h3>
 
-        <p>
-          <strong>Autor:</strong>
-          ${libro.autor || "-"}
-        </p>
+        <p><strong>Autor:</strong> ${libro.autor || "-"}</p>
+
+        <p><strong>ISBN:</strong> ${libro.isbn || "-"}</p>
+
+        <p><strong>Páginas:</strong> ${libro.paginas || "-"}</p>
+
+        <p><strong>Género:</strong> ${libro.genero || "-"}</p>
+
+        <p><strong>Fecha:</strong> ${libro.fecha || "-"}</p>
 
         <p>
-          <strong>ISBN:</strong>
-          ${libro.isbn || "-"}
+          <span class="estado ${libro.estado}">
+            ${libro.estado}
+          </span>
         </p>
 
-        <p>
-          <strong>Páginas:</strong>
-          ${libro.paginas || "-"}
-        </p>
+        <button
+          class="borrar"
+          onclick="borrarLibro(${libro.id})"
+        >
+          Eliminar
+        </button>
 
-        <p>
-          <strong>Género:</strong>
-          ${libro.genero || "-"}
-        </p>
+      </div>
+    `;
+  });
 
-        <p>
-          <strong>Fecha:</strong>
-          ${libro.fecha || "-"}
-        </p>
+}
 
-        <p>
-          <span
-            
+render();
