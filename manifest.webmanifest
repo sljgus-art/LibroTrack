@@ -1,9 +1,0 @@
-{
-  "name": "Entre páginas — Mi biblioteca",
-  "short_name": "Entre páginas",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#f7f4ee",
-  "theme_color": "#f7f4ee",
-  "description": "Biblioteca personal y diario de lectura."
-}
